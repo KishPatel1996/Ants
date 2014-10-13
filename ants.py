@@ -27,6 +27,8 @@ class Place:
         self.entrance = None  # A Place
         # Phase 1: Add an entrance to the exit
         "*** YOUR CODE HERE ***"
+        if exit!=None:
+          exit.entrance=self
 
     def add_insect(self, insect):
         """Add an Insect to this Place.
