@@ -147,6 +147,9 @@ class HarvesterAnt(Ant):
 
     name = 'Harvester'
     implemented = True
+    food_cost=2
+
+
 
     def action(self, colony):
         """Produce 1 additional food for the colony.
@@ -154,6 +157,7 @@ class HarvesterAnt(Ant):
         colony -- The AntColony, used to access game state information.
         """
         "*** YOUR CODE HERE ***"
+        colony.food+=1
 
 
 def random_or_none(s):
@@ -168,6 +172,7 @@ class ThrowerAnt(Ant):
     name = 'Thrower'
     implemented = True
     damage = 1
+    food_cost=4
 
     def nearest_bee(self, hive):
         """Return the nearest Bee in a Place that is not the Hive, connected to
