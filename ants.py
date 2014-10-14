@@ -479,6 +479,12 @@ class ShortThrower(ThrowerAnt):
 
 "*** YOUR CODE HERE ***"
 # The WallAnt class
+class WallAnt(Ant):
+    """An ant with a large amount of armor and 0 damage"""
+    damage=0
+    food_cost=4
+    def __init__(self,armor=4):
+      Ant.__init__(self,armor)
 
 
 class NinjaAnt(Ant):
