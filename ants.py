@@ -119,7 +119,8 @@ class Bee(Insect):
         """Return True if this Bee cannot advance to the next Place."""
         # Phase 3: Special handling for NinjaAnt
         "*** YOUR CODE HERE ***"
-        return self.place.ant is not None
+        return self.place.ant.blocks_path
+        #return self.place.ant is not None
 
     def action(self, colony):
         """A Bee's action stings the Ant that blocks its exit if it is blocked,
@@ -140,6 +141,7 @@ class Ant(Insect):
     implemented = False  # Only implemented Ant classes should be instantiated
     damage = 0
     food_cost = 0
+    blocks_path=True
 
     def __init__(self, armor=1):
         """Create an Ant with an armor quantity."""
@@ -492,11 +494,16 @@ class NinjaAnt(Ant):
 
     name = 'Ninja'
     damage = 1
+
     "*** YOUR CODE HERE ***"
     implemented = False
-
+    blocks_path= False
+    food_cost=6
     def action(self, colony):
         "*** YOUR CODE HERE ***"
+        list_of_bees=self.place.bees
+        for index in range(-len(list_of_bees),0):
+          list_of_bees[index].reduce_armor(self.damage)
 
 
 "*** YOUR CODE HERE ***"
