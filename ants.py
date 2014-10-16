@@ -1,5 +1,5 @@
 """The ants module implements game logic for Ants Vs. SomeBees."""
-#hi
+
 import random
 import sys
 from ucb import main, interact, trace
