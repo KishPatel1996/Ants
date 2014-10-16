@@ -42,6 +42,15 @@ class Place:
         if insect.is_ant:
             # Phase 4: Special handling for BodyguardAnt
             "*** YOUR CODE HERE ***"
+            if self.ant!=None:
+              if self.ant.can_contain(insect):
+                self.ant.contain_ant(insect)
+                return
+              if insect.can_contain(self.ant):
+                insect.contain_ant(self.ant)
+                self.remove_insect(self.ant)
+
+
             assert self.ant is None, 'Two ants in {0}'.format(self)
             self.ant = insect
         else:
@@ -54,6 +63,11 @@ class Place:
             assert self.ant == insect, '{0} is not in {1}'.format(insect, self)
             # Phase 4: Special handling for QueenAnt
             "*** YOUR CODE HERE ***"
+            if insect.container==True and insect.ant!=None:
+              extracted_ant,insect.ant=insect.ant,None
+              self.remove_insect(insect)
+              self.add_insect(extracted_ant)
+              return
             self.ant = None
         else:
             self.bees.remove(insect)
@@ -144,10 +158,20 @@ class Ant(Insect):
     damage = 0
     food_cost = 0
     blocks_path=True
+    container=False
 
     def __init__(self, armor=1):
         """Create an Ant with an armor quantity."""
         Insect.__init__(self, armor)
+
+
+    def can_contain(self,other):
+      # if other.container:
+      #   return False
+      # if self.container and self.ant==None:
+      #   return True
+      # return False
+      return True if self.container and self.ant==None and not other.container else False
 
 
 class HarvesterAnt(Ant):
@@ -539,6 +563,8 @@ class BodyguardAnt(Ant):
     name = 'Bodyguard'
     "*** YOUR CODE HERE ***"
     implemented = False
+    container=True
+    food_cost=4
 
     def __init__(self):
         Ant.__init__(self, 2)
@@ -546,9 +572,13 @@ class BodyguardAnt(Ant):
 
     def contain_ant(self, ant):
         "*** YOUR CODE HERE ***"
+        self.ant=ant
+
 
     def action(self, colony):
         "*** YOUR CODE HERE ***"
+        if self.ant!=None:
+           self.ant.action(colony)
 
 
 class QueenPlace:
