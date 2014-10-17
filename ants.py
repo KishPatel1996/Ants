@@ -205,6 +205,8 @@ class ThrowerAnt(Ant):
     implemented = True
     damage = 1
     food_cost=4
+    min_range=0
+    max_range=10
 
     def nearest_bee(self, hive):
         """Return the nearest Bee in a Place that is not the Hive, connected to
@@ -213,7 +215,23 @@ class ThrowerAnt(Ant):
         This method returns None if there is no such Bee (or none in range).
         """
         "*** YOUR CODE HERE ***"
-        return random_or_none(self.place.bees)
+        x=self.place
+        bee_range=0
+        while x!=None:
+            if x!=hive:
+                if x.bees==[]:
+                    x=x.entrance
+                    bee_range+=1
+                else:
+                    if bee_range>=self.min_range and bee_range<=self.max_range:
+                        return random_or_none(x.bees)
+                    else:
+                        x=x.entrance
+                        bee_range+=1
+            else:
+                x=x.entrance
+                bee_range+=1
+        return None
 
     def throw_at(self, target):
         """Throw a leaf at the target Bee, reducing its armor."""
@@ -494,15 +512,18 @@ class LongThrower(ThrowerAnt):
 
     name = 'Long'
     "*** YOUR CODE HERE ***"
-    implemented = False
+    implemented = True
+    food_cost=3
+    min_range=4
 
 
 class ShortThrower(ThrowerAnt):
     """A ThrowerAnt that only throws leaves at Bees less than 3 places away."""
-
     name = 'Short'
     "*** YOUR CODE HERE ***"
-    implemented = False
+    implemented = True
+    food_cost=3
+    max_range=2
 
 
 "*** YOUR CODE HERE ***"
@@ -537,6 +558,11 @@ class NinjaAnt(Ant):
 
 "*** YOUR CODE HERE ***"
 # The ScubaThrower class
+class ScubaThrower(ThrowerAnt):
+    name='Scuba'
+    food_cost=5
+    watersafe=True
+    implemented = True
 
 
 class HungryAnt(Ant):
@@ -545,18 +571,29 @@ class HungryAnt(Ant):
     """
     name = 'Hungry'
     "*** YOUR CODE HERE ***"
+    food_cost=4
+    time_to_digest=3
     implemented = False
 
     def __init__(self):
         Ant.__init__(self)
         "*** YOUR CODE HERE ***"
+        self.digesting=0
 
     def eat_bee(self, bee):
         "*** YOUR CODE HERE ***"
+        bee.armor=0
+        self.digesting=self.time_to_digest
 
     def action(self, colony):
         "*** YOUR CODE HERE ***"
-
+        if self.digesting>0:
+            self.digesting-=1
+        else:
+            if self.place.bees!=[]:
+                self.eat_bee(random_or_none(self.place.bees))
+                self.place.bees=[x for x in self.place.bees if x.armor!=0]
+            
 
 class BodyguardAnt(Ant):
     """BodyguardAnt provides protection to other Ants."""
