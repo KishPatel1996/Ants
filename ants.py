@@ -44,7 +44,9 @@ class Place:
             "*** YOUR CODE HERE ***"
             if self.ant!=None:
               if self.ant.can_contain(insect):
+                insect.place=self
                 self.ant.contain_ant(insect)
+
                 return
               if insect.can_contain(self.ant):
                 insect.contain_ant(self.ant)
@@ -573,7 +575,7 @@ class HungryAnt(Ant):
     "*** YOUR CODE HERE ***"
     food_cost=4
     time_to_digest=3
-    implemented = False
+    implemented = True
 
     def __init__(self):
         Ant.__init__(self)
@@ -593,13 +595,13 @@ class HungryAnt(Ant):
             if self.place.bees!=[]:
                 self.eat_bee(random_or_none(self.place.bees))
                 self.place.bees=[x for x in self.place.bees if x.armor!=0]
-            
+
 
 class BodyguardAnt(Ant):
     """BodyguardAnt provides protection to other Ants."""
     name = 'Bodyguard'
     "*** YOUR CODE HERE ***"
-    implemented = False
+    implemented = True
     container=True
     food_cost=4
 
