@@ -634,12 +634,13 @@ class QueenPlace:
         "*** YOUR CODE HERE ***"
 
 
-class QueenAnt:  # You should change this line
+class QueenAnt(ScubaThrower):  # You should change this line
     """The Queen of the colony.  The game is over if a bee enters her place."""
 
     name = 'Queen'
     "*** YOUR CODE HERE ***"
     implemented = False
+    food_cost=6
 
     def __init__(self):
         "*** YOUR CODE HERE ***"
@@ -673,6 +674,7 @@ def make_slow(action):
     action -- An action method of some Bee
     """
     "*** YOUR CODE HERE ***"
+    def
 
 def make_stun(action):
     """Return a new action method that does nothing.
@@ -692,6 +694,7 @@ class SlowThrower(ThrowerAnt):
     name = 'Slow'
     "*** YOUR CODE HERE ***"
     implemented = False
+    food_cost = 4
 
     def throw_at(self, target):
         if target:
@@ -704,6 +707,7 @@ class StunThrower(ThrowerAnt):
     name = 'Stun'
     "*** YOUR CODE HERE ***"
     implemented = False
+    food_cost=6
 
     def throw_at(self, target):
         if target:
