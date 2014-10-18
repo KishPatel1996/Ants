@@ -111,6 +111,7 @@ class Insect:
         colony -- The AntColony, used to access game state information.
         """
 
+
     def __repr__(self):
         cname = type(self).__name__
         return '{0}({1}, {2})'.format(cname, self.armor, self.place)
@@ -161,6 +162,8 @@ class Ant(Insect):
     food_cost = 0
     blocks_path=True
     container=False
+    can_stun=False
+    can_slow=False
 
     def __init__(self, armor=1):
         """Create an Ant with an armor quantity."""
@@ -674,18 +677,38 @@ def make_slow(action):
     action -- An action method of some Bee
     """
     "*** YOUR CODE HERE ***"
-    def
 
+    # def slower():
+    #   if colony.timer%2==0:
+    #     return action
+    #   else:
+    #     return
+    #
+    #
+    #
+    # return slower
 def make_stun(action):
     """Return a new action method that does nothing.
 
     action -- An action method of some Bee
     """
     "*** YOUR CODE HERE ***"
+    def do_nothing():
+      return
+    return do_nothing
 
 def apply_effect(effect, bee, duration):
     """Apply a status effect to a Bee that lasts for duration turns."""
     "*** YOUR CODE HERE ***"
+    stored_act=bee.action
+    def effect_in_progress(self):
+      nonlocal duration
+      effect(stored_act)
+      duration-=1
+      if duration==0:
+        bee.action=stored_act
+
+    bee.action=effect_in_progress
 
 
 class SlowThrower(ThrowerAnt):
@@ -708,6 +731,7 @@ class StunThrower(ThrowerAnt):
     "*** YOUR CODE HERE ***"
     implemented = False
     food_cost=6
+    can_stun=True
 
     def throw_at(self, target):
         if target:

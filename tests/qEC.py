@@ -10,23 +10,18 @@ test = {
   'suites': [
     [
       {
-        'locked': True,
         'test': r"""
         >>> # Testing status parameters
         >>> slow = SlowThrower()
         >>> stun = StunThrower()
         >>> SlowThrower.food_cost
-        f4b3281120d40117b023d6c1a373fde6
-        # locked
+        4
         >>> StunThrower.food_cost
-        6e64cd41ecdfe7fd3b99f4395dfd7c25
-        # locked
+        6
         >>> slow.armor
-        d051d778cc59e30ceee412e76d1fdbc4
-        # locked
+        1
         >>> stun.armor
-        d051d778cc59e30ceee412e76d1fdbc4
-        # locked
+        1
         """,
         'type': 'doctest'
       },
@@ -49,7 +44,7 @@ test = {
         'tunnel_0_3'
         >>> for _ in range(3):
         ...    colony.time += 1
-        >>> bee.action(colony)
+        ...    bee.action(colony)
         >>> bee.place.name
         'tunnel_0_1'
         """,
@@ -77,7 +72,6 @@ test = {
     ],
     [
       {
-        'locked': True,
         'test': r"""
         >>> # Testing if effects stack
         >>> stun = StunThrower()
@@ -94,13 +88,11 @@ test = {
         ...    if bee.place.name != 'tunnel_0_4':
         ...        passed = False
         >>> passed
-        818d43c4eb49bce28d693d249148409c
-        # locked
+        True
         """,
         'type': 'doctest'
       },
       {
-        'locked': True,
         'test': r"""
         >>> # Testing multiple stuns
         >>> stun1 = StunThrower()
@@ -116,24 +108,19 @@ test = {
         >>> bee1.action(colony)
         >>> bee2.action(colony)
         >>> bee1.place.name
-        922cc8e76e4df721c3123a518f16b467
-        # locked
+        'tunnel_0_1'
         >>> bee2.place.name
-        6ee2dac456a484e0c52d92382c675744
-        # locked
+        'tunnel_0_3'
         >>> bee1.action(colony)
         >>> bee2.action(colony)
         >>> bee1.place.name
-        ca02366e00a5ed9c798ad31c3bb8a2cb
-        # locked
+        'tunnel_0_0'
         >>> bee2.place.name
-        359065a3eb11a7b754157e3fde96fc93
-        # locked
+        'tunnel_0_2'
         """,
         'type': 'doctest'
       },
       {
-        'locked': True,
         'test': r"""
         >>> # Testing long effect stack
         >>> stun = StunThrower()
@@ -148,43 +135,35 @@ test = {
         >>> colony.time = 0
         >>> bee.action(colony) # stunned
         >>> bee.place.name
-        0743f00a386a9fdb01a8d03f6cafc604
-        # locked
+        'tunnel_0_4'
         >>> colony.time = 1
         >>> bee.action(colony) # slowed thrice
         >>> bee.place.name
-        0743f00a386a9fdb01a8d03f6cafc604
-        # locked
+        'tunnel_0_4'
         >>> colony.time = 2
         >>> bee.action(colony) # slowed thrice
         >>> bee.place.name
-        6ee2dac456a484e0c52d92382c675744
-        # locked
+        'tunnel_0_3'
         >>> colony.time = 3
         >>> bee.action(colony) # slowed thrice
         >>> bee.place.name
-        6ee2dac456a484e0c52d92382c675744
-        # locked
+        'tunnel_0_3'
         >>> colony.time = 4
         >>> bee.action(colony) # slowed twice
         >>> bee.place.name
-        359065a3eb11a7b754157e3fde96fc93
-        # locked
+        'tunnel_0_2'
         >>> colony.time = 5
         >>> bee.action(colony) # slowed twice
         >>> bee.place.name
-        359065a3eb11a7b754157e3fde96fc93
-        # locked
+        'tunnel_0_2'
         >>> colony.time = 6
         >>> bee.action(colony) # slowed once
         >>> bee.place.name
-        922cc8e76e4df721c3123a518f16b467
-        # locked
+        'tunnel_0_1'
         >>> colony.time = 7
         >>> bee.action(colony) # no effects
         >>> slow.armor
-        11862fc8ebde17878dbcfc9a133b7094
-        # locked
+        0
         """,
         'type': 'doctest'
       }
