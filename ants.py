@@ -678,22 +678,24 @@ def make_slow(action):
     """
     "*** YOUR CODE HERE ***"
 
-    # def slower():
-    #   if colony.timer%2==0:
-    #     return action
-    #   else:
-    #     return
-    #
-    #
-    #
-    # return slower
+
+    def slower(colony):
+      if colony.time%2==0:
+        return action(colony)
+      else:
+        return
+
+
+
+    return slower
 def make_stun(action):
     """Return a new action method that does nothing.
 
     action -- An action method of some Bee
     """
     "*** YOUR CODE HERE ***"
-    def do_nothing():
+
+    def do_nothing(colony):
       return
     return do_nothing
 
@@ -701,14 +703,35 @@ def apply_effect(effect, bee, duration):
     """Apply a status effect to a Bee that lasts for duration turns."""
     "*** YOUR CODE HERE ***"
     stored_act=bee.action
-    def effect_in_progress(self):
-      nonlocal duration
-      effect(stored_act)
-      duration-=1
-      if duration==0:
-        bee.action=stored_act
 
-    bee.action=effect_in_progress
+    def tracker(colony):
+      nonlocal duration
+      duration-=1
+      if duration>=0:
+
+        return effect(stored_act)(colony)
+
+      if duration<0:
+        return stored_act(colony)
+
+    bee.action=tracker
+
+
+    # def effect_in_progress():
+    #
+    #   def effecter(colony):
+    #     nonlocal duration
+    #     if duration!=0:
+    #       return effect(stored_act)(colony)
+    #       duration-=1
+    #
+    #     if duration==0:
+    #       return stored_act(colony)
+    #
+    #
+    #   return effecter
+    #
+    # bee.action=effect_in_progress()
 
 
 class SlowThrower(ThrowerAnt):
