@@ -161,6 +161,7 @@ class Ant(Insect):
     food_cost = 0
     blocks_path=True
     container=False
+    is_doubled=False
 
     def __init__(self, armor=1):
         """Create an Ant with an armor quantity."""
@@ -626,23 +627,28 @@ class QueenPlace:
     (1) The original colony queen location at the end of all tunnels, and
     (2) The place in which the QueenAnt resides.
     """
+    lst_bees=[]
     def __init__(self, colony_queen, ant_queen):
         "*** YOUR CODE HERE ***"
+        self.ant_queen=ant_queen
+        self.colony_queen=colony_queen
 
     @property
     def bees(self):
         "*** YOUR CODE HERE ***"
+        return [bee for bee in self.ant_queen.bees] + [bee for bee in self.colony_queen.bees]
 
-
-class QueenAnt:  # You should change this line
+class QueenAnt(ScubaThrower):  # You should change this line
     """The Queen of the colony.  The game is over if a bee enters her place."""
 
     name = 'Queen'
     "*** YOUR CODE HERE ***"
-    implemented = False
+    implemented = True
+    real_queen=0
 
     def __init__(self):
         "*** YOUR CODE HERE ***"
+        ScubaThrower.__init__(self, armor=1)
 
     def action(self, colony):
         """A queen ant throws a leaf, but also doubles the damage of ants
@@ -651,6 +657,22 @@ class QueenAnt:  # You should change this line
         Impostor queens do only one thing: reduce their own armor to 0.
         """
         "*** YOUR CODE HERE ***"
+        x=self.place
+        while x!=None:
+        	if x.ant!=None and x.ant.is_doubled==False and x.ant.name!='Queen':
+        		x.ant.damage*=2
+        		x.ant.is_doubled=True
+        	x=x.entrance
+
+        x=self.place
+        while x!=None:
+        	if x.ant!=None and x.ant.is_doubled==False and x.ant.name!='Queen':
+        		x.ant.damage*=2
+        		x.ant.is_doubled=True
+        	x=x.exit
+        self.throw_at(self.nearest_bee(colony.hive))
+
+
 
 
 class AntRemover(Ant):
