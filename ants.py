@@ -660,7 +660,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
     food_cost=6
 
     implemented = True
-    real_queen=0
+    real_queen=False
     lst_ants=[]
     lst_queens=[]
 
@@ -669,10 +669,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
         "*** YOUR CODE HERE ***"
         ScubaThrower.__init__(self, armor=1)
         if QueenAnt.lst_queens==[]:
-          self.real_queen=1
-        else:
-          self.armor=0
-          self.damage=0
+          self.real_queen=True
         QueenAnt.lst_queens.append(self)
 
 
@@ -683,6 +680,9 @@ class QueenAnt(ScubaThrower):  # You should change this line
         Impostor queens do only one thing: reduce their own armor to 0.
         """
         "*** YOUR CODE HERE ***"
+        if not self.real_queen:
+            self.reduce_armor(self.armor)
+            return
         x=self.place
         while x!=None:
         	if x.ant!=None and x.ant not in self.lst_ants and x.ant.name!='Queen' and self.real_queen==1:
