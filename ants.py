@@ -43,14 +43,17 @@ class Place:
             # Phase 4: Special handling for BodyguardAnt
             "*** YOUR CODE HERE ***"
             if self.ant!=None:
-              if self.ant.can_contain(insect):
-                insect.place=self
-                self.ant.contain_ant(insect)
-
-                return
-              if insect.can_contain(self.ant):
-                insect.contain_ant(self.ant)
-                self.remove_insect(self.ant)
+            	if self.ant.can_contain(insect):
+            		insect.place=self
+            		self.ant.contain_ant(insect)
+            		return
+            	if insect.can_contain(self.ant):
+            		insect.contain_ant(self.ant)
+            		self.remove_insect(self.ant)
+            		self.ant=insect
+            		insect.place=self
+            		insect.ant.place=self
+            		return
 
 
             assert self.ant is None, 'Two ants in {0}'.format(self)
@@ -65,6 +68,8 @@ class Place:
             assert self.ant == insect, '{0} is not in {1}'.format(insect, self)
             # Phase 4: Special handling for QueenAnt
             "*** YOUR CODE HERE ***"
+            if insect.name=='Queen' and insect.real_queen==1:
+            	return
             if insect.container==True and insect.ant!=None:
               extracted_ant,insect.ant=insect.ant,None
               self.remove_insect(insect)
@@ -161,7 +166,7 @@ class Ant(Insect):
     food_cost = 0
     blocks_path=True
     container=False
-    is_doubled=False
+    name=None
 
     def __init__(self, armor=1):
         """Create an Ant with an armor quantity."""
@@ -631,12 +636,13 @@ class QueenPlace:
     def __init__(self, colony_queen, ant_queen):
         "*** YOUR CODE HERE ***"
         self.ant_queen=ant_queen
+
         self.colony_queen=colony_queen
 
     @property
     def bees(self):
         "*** YOUR CODE HERE ***"
-        return [bee for bee in self.ant_queen.bees] + [bee for bee in self.colony_queen.bees]
+        return [bee for bee in self.colony_queen.bees] + [bee for bee in self.ant_queen.bees]
 
 class QueenAnt(ScubaThrower):  # You should change this line
     """The Queen of the colony.  The game is over if a bee enters her place."""
@@ -645,10 +651,19 @@ class QueenAnt(ScubaThrower):  # You should change this line
     "*** YOUR CODE HERE ***"
     implemented = True
     real_queen=0
+    lst_ants=[]
+    lst_queens=[]
 
     def __init__(self):
         "*** YOUR CODE HERE ***"
         ScubaThrower.__init__(self, armor=1)
+        if QueenAnt.lst_queens==[]:
+          self.real_queen=1
+        else:
+          self.armor=0
+          self.damage=0
+        QueenAnt.lst_queens.append(self)
+
 
     def action(self, colony):
         """A queen ant throws a leaf, but also doubles the damage of ants
@@ -659,18 +674,26 @@ class QueenAnt(ScubaThrower):  # You should change this line
         "*** YOUR CODE HERE ***"
         x=self.place
         while x!=None:
-        	if x.ant!=None and x.ant.is_doubled==False and x.ant.name!='Queen':
+        	if x.ant!=None and x.ant not in self.lst_ants and x.ant.name!='Queen' and self.real_queen==1:
         		x.ant.damage*=2
-        		x.ant.is_doubled=True
+        		self.lst_ants.append(x.ant)
+        		if x.ant.container==True and x.ant.ant.name!='Queen':
+        			x.ant.ant.damage*=2
+        			self.lst_ants.append(x.ant.ant)
         	x=x.entrance
 
         x=self.place
         while x!=None:
-        	if x.ant!=None and x.ant.is_doubled==False and x.ant.name!='Queen':
+        	if x.ant!=None and x.ant not in self.lst_ants and x.ant.name!='Queen' and self.real_queen==1:
         		x.ant.damage*=2
-        		x.ant.is_doubled=True
+        		self.lst_ants.append(x.ant)
+        		if x.ant.container==True and x.ant.ant.name!='Queen':
+        			x.ant.ant.damage*=2
+        			self.lst_ants.append(x.ant.ant)
+
         	x=x.exit
         self.throw_at(self.nearest_bee(colony.hive))
+        colony.queen=QueenPlace(colony.queen, self.place)
 
 
 
