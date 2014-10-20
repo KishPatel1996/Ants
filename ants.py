@@ -167,12 +167,11 @@ class Ant(Insect):
     food_cost = 0
     blocks_path=True
     container=False
-<<<<<<< HEAD
+
     can_stun=False
     can_slow=False
-=======
+
     name=None
->>>>>>> origin/prob-9-implem
 
     def __init__(self, armor=1):
         """Create an Ant with an armor quantity."""
@@ -650,24 +649,21 @@ class QueenPlace:
         "*** YOUR CODE HERE ***"
         return [bee for bee in self.colony_queen.bees] + [bee for bee in self.ant_queen.bees]
 
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/prob-9-implem
 class QueenAnt(ScubaThrower):  # You should change this line
     """The Queen of the colony.  The game is over if a bee enters her place."""
 
     name = 'Queen'
     "*** YOUR CODE HERE ***"
-<<<<<<< HEAD
+
     implemented = False
     food_cost=6
-=======
+
     implemented = True
     real_queen=0
     lst_ants=[]
     lst_queens=[]
->>>>>>> origin/prob-9-implem
+
 
     def __init__(self):
         "*** YOUR CODE HERE ***"
@@ -772,22 +768,6 @@ def apply_effect(effect, bee, duration):
 
     bee.action=tracker
 
-
-    # def effect_in_progress():
-    #
-    #   def effecter(colony):
-    #     nonlocal duration
-    #     if duration!=0:
-    #       return effect(stored_act)(colony)
-    #       duration-=1
-    #
-    #     if duration==0:
-    #       return stored_act(colony)
-    #
-    #
-    #   return effecter
-    #
-    # bee.action=effect_in_progress()
 
 
 class SlowThrower(ThrowerAnt):
