@@ -179,11 +179,7 @@ class Ant(Insect):
 
 
     def can_contain(self,other):
-      # if other.container:
-      #   return False
-      # if self.container and self.ant==None:
-      #   return True
-      # return False
+
       return True if self.container and self.ant==None and not other.container else False
 
 
