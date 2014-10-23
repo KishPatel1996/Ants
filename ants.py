@@ -179,11 +179,7 @@ class Ant(Insect):
 
 
     def can_contain(self,other):
-      # if other.container:
-      #   return False
-      # if self.container and self.ant==None:
-      #   return True
-      # return False
+
       return True if self.container and self.ant==None and not other.container else False
 
 
@@ -660,7 +656,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
     food_cost=6
 
     implemented = True
-    real_queen=0
+    real_queen=False
     lst_ants=[]
     lst_queens=[]
 
@@ -669,10 +665,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
         "*** YOUR CODE HERE ***"
         ScubaThrower.__init__(self, armor=1)
         if QueenAnt.lst_queens==[]:
-          self.real_queen=1
-        else:
-          self.armor=0
-          self.damage=0
+          self.real_queen=True
         QueenAnt.lst_queens.append(self)
 
 
@@ -683,6 +676,9 @@ class QueenAnt(ScubaThrower):  # You should change this line
         Impostor queens do only one thing: reduce their own armor to 0.
         """
         "*** YOUR CODE HERE ***"
+        if not self.real_queen:
+            self.reduce_armor(self.armor)
+            return
         x=self.place
         while x!=None:
         	if x.ant!=None and x.ant not in self.lst_ants and x.ant.name!='Queen' and self.real_queen==1:
@@ -764,6 +760,7 @@ def apply_effect(effect, bee, duration):
         return effect(stored_act)(colony)
 
       if duration<0:
+        bee.action=stored_act
         return stored_act(colony)
 
     bee.action=tracker
@@ -775,7 +772,7 @@ class SlowThrower(ThrowerAnt):
 
     name = 'Slow'
     "*** YOUR CODE HERE ***"
-    implemented = False
+    implemented = True
     food_cost = 4
 
     def throw_at(self, target):
@@ -788,7 +785,7 @@ class StunThrower(ThrowerAnt):
 
     name = 'Stun'
     "*** YOUR CODE HERE ***"
-    implemented = False
+    implemented = True
     food_cost=6
     can_stun=True
 
