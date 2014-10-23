@@ -544,6 +544,8 @@ class WallAnt(Ant):
     implemented = True
     damage=0
     food_cost=4
+
+    
     def __init__(self,armor=4):
       Ant.__init__(self,armor)
 
