@@ -68,7 +68,7 @@ class Place:
             assert self.ant == insect, '{0} is not in {1}'.format(insect, self)
             # Phase 4: Special handling for QueenAnt
             "*** YOUR CODE HERE ***"
-            if insect.name=='Queen' and insect.real_queen==1:
+            if insect.name=='Queen' and insect.real_queen==True:
             	return
             if insect.container==True and insect.ant!=None:
               extracted_ant,insect.ant=insect.ant,None
