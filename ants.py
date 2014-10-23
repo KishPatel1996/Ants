@@ -545,7 +545,7 @@ class WallAnt(Ant):
     damage=0
     food_cost=4
 
-    
+
     def __init__(self,armor=4):
       Ant.__init__(self,armor)
 
@@ -645,7 +645,7 @@ class QueenPlace:
     @property
     def bees(self):
         "*** YOUR CODE HERE ***"
-        return [bee for bee in self.colony_queen.bees] + [bee for bee in self.ant_queen.bees]
+        return self.colony_queen.bees + self.ant_queen.bees
 
 
 class QueenAnt(ScubaThrower):  # You should change this line
