@@ -681,26 +681,24 @@ class QueenAnt(ScubaThrower):  # You should change this line
         if not self.real_queen:
             self.reduce_armor(self.armor)
             return
-        x=self.place
-        while x!=None:
-        	if x.ant!=None and x.ant not in self.lst_ants and x.ant.name!='Queen' and self.real_queen==1:
-        		x.ant.damage*=2
-        		self.lst_ants.append(x.ant)
-        		if x.ant.container==True and x.ant.ant.name!='Queen':
-        			x.ant.ant.damage*=2
-        			self.lst_ants.append(x.ant.ant)
-        	x=x.entrance
 
-        x=self.place
-        while x!=None:
-        	if x.ant!=None and x.ant not in self.lst_ants and x.ant.name!='Queen' and self.real_queen==1:
-        		x.ant.damage*=2
-        		self.lst_ants.append(x.ant)
-        		if x.ant.container==True and x.ant.ant.name!='Queen':
-        			x.ant.ant.damage*=2
-        			self.lst_ants.append(x.ant.ant)
 
-        	x=x.exit
+        for ind in range(2):
+          x=self.place
+
+          while x!=None:
+            if x.ant!=None and x.ant not in self.lst_ants and x.ant.name!='Queen' and self.real_queen==1:
+              x.ant.damage*=2
+              self.lst_ants.append(x.ant)
+              if x.ant.container==True and x.ant.ant.name!='Queen':
+                x.ant.ant.damage*=2
+                self.lst_ants.append(x.ant.ant)
+
+            if ind==0:
+              x=x.entrance
+            else:
+              x=x.exit
+
         self.throw_at(self.nearest_bee(colony.hive))
         colony.queen=QueenPlace(colony.queen, self.place)
 
