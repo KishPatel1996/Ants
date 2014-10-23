@@ -760,6 +760,7 @@ def apply_effect(effect, bee, duration):
         return effect(stored_act)(colony)
 
       if duration<0:
+        bee.action=stored_act
         return stored_act(colony)
 
     bee.action=tracker
@@ -771,7 +772,7 @@ class SlowThrower(ThrowerAnt):
 
     name = 'Slow'
     "*** YOUR CODE HERE ***"
-    implemented = False
+    implemented = True
     food_cost = 4
 
     def throw_at(self, target):
@@ -784,7 +785,7 @@ class StunThrower(ThrowerAnt):
 
     name = 'Stun'
     "*** YOUR CODE HERE ***"
-    implemented = False
+    implemented = True
     food_cost=6
     can_stun=True
 
